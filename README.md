@@ -1,8 +1,8 @@
-# StudyBuddy — Version 3
+# StudyBuddy 
 
 Student Academic Planning and Course Recommendation System
 
-AIUB · Web Technologies · Fall 2026–27 · Group 9
+AIUB · Web Technologies · Fall 2026–27 · Group 10
 
 ## Run
 
@@ -50,4 +50,4 @@ GPA is `sum(credits × grade points) / sum(credits)`, rounded only for display. 
 
 Each role keeps its dashboard HTML and matching script in its own folder. `JS/Common.js` contains shared validation; `JS/AcademicData.js` supplies fictional academic records and lookup helpers. Existing account data remains in `JS/Data.js`.
 
-Read the [Version 3 handoff](Docs/Version3Handoff.md), [code guide](Docs/CodeGuide.md), [development stages](Docs/DevelopmentPlan.md), [team responsibilities](Docs/TeamResponsibilities.md), and [validation record](Docs/ValidationChecklist.md).
+
