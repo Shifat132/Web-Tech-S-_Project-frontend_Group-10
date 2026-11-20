@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../Images/StudyBuddyLogo.png" type="image/png">
+    <title>StudyBuddy - Academic Coordinator Dashboard</title>
+    <link rel="stylesheet" href="../Design/Style.css">
+</head>
+<body class="coordinator" onload="loadCoordinatorDashboard()">
+    <header class="header">
+        <div class="brand">
+            <a href="../index.html" aria-label="StudyBuddy home">
+                <img class="project-logo" src="../Images/StudyBuddyLogo.png" alt="StudyBuddy logo: two students and an open book" width="76" height="72">
+            </a>
+            <h1>StudyBuddy</h1>
+        </div>
+        <p>Student Academic Planning and Course Recommendation System</p>
+    </header>
+
+    <nav class="topnav" aria-label="Academic Coordinator Dashboard navigation">
+        <a href="../index.html">Home</a>
+        <a href="CoordinatorDashboard.html" class="active" aria-current="page">Dashboard</a>
+        <a href="../Login.html">Login / Switch Role</a>
+    </nav>
+
+    <main class="page">
+        <h2>Academic Coordinator Dashboard</h2>
+        <p>Prepare a course offering and filter the sample semester schedule.</p>
+        <p class="small-note">These are fictional records. Changes on this page are temporary and reset when you refresh or leave it. They are not shared with other dashboards.</p>
+        <p><a href="#course-offering">Course Offering</a> | <a href="#semester-schedule">Semester Schedule</a></p>
+
+        <section class="tool-section" id="course-offering">
+            <h3>Course Offering</h3>
+            <form id="CourseOfferingForm" onsubmit="return validateCourseOfferingForm()" onreset="resetCourseOfferingForm()" oninput="clearResult('OfferingResult')" onchange="clearResult('OfferingResult')" novalidate>
+                <fieldset disabled>
+                    <legend>Offering Details</legend>
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <label for="OfferCourse">Course Code</label>
+                            <select id="OfferCourse" required aria-describedby="OfferCourseError"><option value="">Select a course</option></select>
+                            <p class="error" id="OfferCourseError"></p>
+                        </div>
+                        <div class="form-row">
+                            <label for="OfferSemester">Semester</label>
+                            <select id="OfferSemester" required aria-describedby="OfferSemesterError"><option value="">Select a semester</option></select>
+                            <p class="error" id="OfferSemesterError"></p>
+                        </div>
+                        <div class="form-row">
+                            <label for="OfferSection">Section</label>
+                            <input id="OfferSection" type="text" placeholder="A or B1" required aria-describedby="SectionHint OfferSectionError">
+                            <p class="small-note" id="SectionHint">Use one letter with an optional digit. Sections are compared in uppercase.</p>
+                            <p class="error" id="OfferSectionError"></p>
+                        </div>
+                        <div class="form-row">
+                            <label for="OfferFaculty">Faculty Member</label>
+                            <select id="OfferFaculty" required aria-describedby="OfferFacultyError"><option value="">Select a faculty member</option></select>
+                            <p class="error" id="OfferFacultyError"></p>
+                        </div>
+                        <div class="form-row">
+                            <label for="OfferSeats">Available Seats</label>
+                            <input id="OfferSeats" type="number" min="1" max="60" step="1" required aria-describedby="SeatsHint OfferSeatsError">
+                            <p class="small-note" id="SeatsHint">The demo allows 1 to 60 whole-number seats.</p>
+                            <p class="error" id="OfferSeatsError"></p>
+                        </div>
+                        <div class="form-row">
+                            <label for="OfferSchedule">Class Schedule</label>
+                            <select id="OfferSchedule" required aria-describedby="ScheduleHint OfferScheduleError"><option value="">Select a class schedule</option></select>
+                            <p class="small-note" id="ScheduleHint">A faculty member cannot have two classes in the same semester and time slot.</p>
+                            <p class="error" id="OfferScheduleError"></p>
+                        </div>
+                    </div>
+                </fieldset>
+                <p id="OfferingResult" class="message" role="status" aria-live="polite"></p>
+                <div class="form-buttons">
+                    <button type="submit">Add Offering</button>
+                    <button class="secondary" type="reset">Reset Form</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="tool-section" id="semester-schedule">
+            <h3>Semester Schedule</h3>
+            <form id="ScheduleFilterForm" onsubmit="return filterSemesterSchedule()" onreset="resetScheduleFilters()" oninput="clearResult('FilterResult')" onchange="clearResult('FilterResult')" novalidate>
+                <fieldset disabled>
+                    <legend>Filter Offerings</legend>
+                    <div class="form-grid">
+                        <div class="form-row">
+                            <label for="FilterSemester">Semester</label>
+                            <select id="FilterSemester" aria-describedby="FilterSemesterError"><option value="">All semesters</option></select>
+                            <p class="error" id="FilterSemesterError"></p>
+                        </div>
+                        <div class="form-row">
+                            <label for="FilterDepartment">Department</label>
+                            <select id="FilterDepartment" aria-describedby="FilterDepartmentError"><option value="">All departments</option></select>
+                            <p class="error" id="FilterDepartmentError"></p>
+                        </div>
+                    </div>
+                </fieldset>
+                <p id="FilterResult" class="message" role="status" aria-live="polite"></p>
+                <div class="form-buttons">
+                    <button type="submit">Apply Filters</button>
+                    <button class="secondary" type="reset">Clear Filters</button>
+                </div>
+            </form>
+            <p id="ScheduleCount" role="status" aria-live="polite"></p>
+            <div class="table-scroll">
+                <table>
+                    <caption>Sample course offerings, including additions made on this page</caption>
+                    <thead>
+                        <tr><th scope="col">Course</th><th scope="col">Title</th><th scope="col">Department</th><th scope="col">Semester</th><th scope="col">Section</th><th scope="col">Faculty</th><th scope="col">Seats</th><th scope="col">Schedule</th></tr>
+                    </thead>
+                    <tbody id="ScheduleRows"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Web Technologies | Fall 2026–27 | Group 9</p>
+        <p>Frontend demonstration with sample data.</p>
+    </footer>
+    <script src="../JS/Common.js"></script>
+    <script src="../JS/AcademicData.js"></script>
+    <script src="JS/CoordinatorDashboard.js"></script>
+</body>
+</html>
